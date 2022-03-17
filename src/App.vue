@@ -1,26 +1,85 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <!--侧边栏-->
+    <aside>
+      <nav-aside></nav-aside>
+    </aside>
+    <!--右边主要-->
+    <main>
+      <!--上面搜索栏-->
+      <div class="top-bar">
+        <top-bar></top-bar>
+      </div>
+      <!--router-view-->
+      <div class="view">
+        <router-view></router-view>
+      </div>
+    </main>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import NavAside from "@/components/NavAside";
+import TopBar from "@/components/TopBar";
+// import {ref} from "vue";
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  components: {NavAside, TopBar},
+  setup() {
+
+    return {
+
+    }
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  width: 100vw;
+  height: 100vh;
+  background-color: #bfa;
+  display: flex;
+  overflow: auto;
+}
+</style>
+
+<style scoped lang="scss">
+$main-background-color: #f5edee;
+$aside-background: rgb(245, 245, 245);
+aside {
+  width: 235px;
+  background-color: $aside-background;
+  // 往里面挤一点
+  padding: 0 20px;
+  // 溢出
+  overflow: auto;
+}
+
+main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: $main-background-color;
+  overflow: auto;
+
+  .top-bar {
+    flex: 0 0 6rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-width: 48.5rem;
+  }
+
+  .view {
+    flex: 1 1 auto;
+    overflow: auto;
+  }
 }
 </style>
