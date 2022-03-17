@@ -7,7 +7,8 @@ const store = createStore({
             {id:'003', value: 'Todo数据3', completed: true, important: false, isEdit: false},
             {id:'999', value: 'Todo数据4', completed: true, important: false, isEdit: false},
             {id:'998', value: 'Todo数据5', completed: false, important: false, isEdit: false},
-        ]
+        ],
+        searchKey: ''
     },
     actions: {
         // 更新TodoValue
@@ -73,23 +74,37 @@ const store = createStore({
                     todo.important = !todo.important
                 }
             })
+        },
+        getSearchKey(state, searchKey){
+            state.searchKey = searchKey;
         }
 
     },
     getters: {
-        doneTodoNumber(state) {
-            return state.todoLists.reduce((pre, todo) => {
+        // return: searchedTodoLists
+        searchedTodoLists(state){
+            const searchKey = state.searchKey;
+            return state.todoLists.filter(todo => {
+                return todo.value.indexOf(searchKey) !== -1
+            })
+        },
+        doneTodoNumber(state, getters) {
+            // return state.todoLists.reduce((pre, todo) => {
+            //     return pre + (todo.completed ? 1 : 0);
+            // }, 0)
+            return getters.searchedTodoLists.reduce((pre, todo) => {
                 return pre + (todo.completed ? 1 : 0);
             }, 0)
         },
-        importantTodo(state){
-            return state.todoLists.filter(todo => todo.important)
+        importantTodo(state, getters){
+            return getters.searchedTodoLists.filter(todo => todo.important)
         },
-        simpleTodoNumber(state){
-            return state.todoLists.reduce((pre, todo) => {
+        simpleTodoNumber(state, getters){
+            return getters.searchedTodoLists.reduce((pre, todo) => {
                 return pre + (todo.important ? 0 : 1);
             }, 0)
         },
+
     }
 })
 export default store

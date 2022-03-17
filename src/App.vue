@@ -66,7 +66,8 @@ main {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  background-color: $main-background-color;
+  //background-color: $main-background-color;
+  background-image: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
   overflow: auto;
 
   .top-bar {

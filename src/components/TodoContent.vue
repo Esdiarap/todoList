@@ -1,5 +1,5 @@
 <template>
-  <div v-for="todo in todoLists" :key="todo.id" class="todo-item-container">
+  <div v-for="todo in searchedTodoLists" :key="todo.id" class="todo-item-container">
     <div class="todo-item">
       <todo-item :todo="todo"></todo-item>
     </div>
@@ -21,17 +21,21 @@ export default {
   components: {TodoItem, TodoFooter},
   setup() {
     const store = useStore()
-    const todoLists = computed(() => {
-      return store.state.todoLists
+    const searchedTodoLists = computed(() => {
+      return store.getters.searchedTodoLists
     })
+    // const todoLists = computed(() => {
+    //   return store.state.todoLists
+    // })
     // 总共Todo个数
     const totalNumber = computed(() => {
-      return todoLists.value.length;
+      return searchedTodoLists.value.length;
     })
 
     return {
-      todoLists,
-      totalNumber
+      // todoLists,
+      totalNumber,
+      searchedTodoLists
     }
   }
 }

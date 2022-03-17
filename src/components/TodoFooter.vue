@@ -21,8 +21,8 @@ export default {
   name: "TodoFooter",
   setup() {
     const store = useStore();
-    const todoLists = computed(() => {
-      return store.state.todoLists;
+    const searchedTodoLists = computed(() => {
+      return store.getters.searchedTodoLists;
     })
 
     // Footer
@@ -33,7 +33,7 @@ export default {
 
     // 总共Todo个数
     const totalNumber = computed(() => {
-      return todoLists.value.length;
+      return searchedTodoLists.value.length;
     })
 
     // 是否全选了

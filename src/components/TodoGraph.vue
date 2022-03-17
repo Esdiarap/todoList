@@ -1,7 +1,8 @@
 <template>
   <div class="top-graph" id="topGraph"></div>
   <div class="bottom-graph">
-
+    <p class="importantTodo-title">Important Todo</p>
+    <p v-for="(todo, index) in importantTodo" :key="index" class="importantTodo">{{todo.value}}</p>
   </div>
 </template>
 
@@ -15,11 +16,11 @@ export default {
   setup() {
     const store = useStore()
     let echart = echarts;
+    let chart; // chart
     const completedTodoNumber = computed(() => store.getters.doneTodoNumber)
     const importantTodo = computed(() => store.getters.importantTodo)
     // console.log('importantTodo', importantTodo, 'value', importantTodo.value) // importantTodo是一个ComputedRef, value是一个数组
     const simpleTodoNumber = computed(() => store.getters.simpleTodoNumber)
-
     function initChart(chart) {
       chart.setOption({
         angleAxis: {},
@@ -83,7 +84,7 @@ export default {
     }
 
     onMounted(() => {
-      let chart = echart.init(document.getElementById("topGraph"));
+      chart = echart.init(document.getElementById("topGraph"));
       // 初始化视图
       initChart(chart);
 
@@ -100,12 +101,12 @@ export default {
     })
 
     onUnmounted(() => {
-      echart.dispose();
+      echart.dispose(chart);
     })
-
 
     return {
       initChart,
+      importantTodo
     }
   }
 }
@@ -119,5 +120,26 @@ export default {
 
 .top-graph {
   margin-bottom: 30px;
+}
+
+.bottom-graph{
+  border-radius: 20px;
+  background-color: #ff9a9e;
+}
+
+.importantTodo-title{
+  font-size: 2rem;
+  line-height: 3rem;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.importantTodo{
+  text-align: center;
+  background-color: whitesmoke;
+  line-height: 2rem;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
 }
 </style>

@@ -1,16 +1,22 @@
 <template>
-  <input type="text" placeholder="请输入你要搜索的Todo" v-model="inputValue">
+  <input type="text" placeholder="请输入你要搜索的Todo" v-model.lazy="inputValue" @blur="search">
   <div class="profile">U</div>
 </template>
 
 <script>
 import {ref} from "vue";
+import {useStore} from "vuex";
 export default {
   name: "TopBar",
   setup() {
-    const inputValue = ref('');
+    const store = useStore()
+    const inputValue = ref('')
+    function search(){
+      store.commit('getSearchKey', inputValue.value)
+    }
     return {
-      inputValue
+      inputValue,
+      search
     }
   }
 }

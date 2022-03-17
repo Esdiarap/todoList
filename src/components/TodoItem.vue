@@ -15,7 +15,7 @@
   <div class="todo-right-container">
 
     <div @click="changeImportant(todo.id)" class="important-icon-container">
-      <img src="../assets/images/important.svg" alt="星星" class="importantIcon" ref="importantIcon">
+      <img src="../assets/images/important.svg" alt="星星" class="importantIcon" ref="importantIcon" :class="{important: todo.important}">
     </div>
 
     <!--编辑-->
@@ -71,9 +71,7 @@ export default {
     const importantIcon = ref(null);
     function changeImportant(id){
       store.commit('changeImportant', id)
-      nextTick(() => {
-        importantIcon.value.classList.toggle('important')
-      })
+      importantIcon.value.classList.toggle('important')
     }
 
     const checkboxId = nanoid()
